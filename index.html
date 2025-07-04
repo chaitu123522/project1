@@ -25,7 +25,7 @@
 
                 <input type="submit" value="Generate" class="btn btn-success" onclick="generateNum()">
                 
-                 <input type="submit" value="Reset" class="btn btn-danger" onclick="resetNum()">
+                 <input type="submit" value="Reset" class="btn btn-danger" onclick="resetNum()" title="click this button 3 times to reset all">
                 <br><br>
             </div>
             <div class="col-sm-6">
@@ -42,6 +42,8 @@
     <script>
         let gnum=null;
         let result="";
+        let prevguess=0;
+        let resetCount=0; 
         
         let attempt=1;
         function generateNum() {
@@ -79,7 +81,10 @@
                 gnum=null;
                 attempt=0;
             }
-            attempt++;
+            if(num != prevguess){
+                attempt++;
+            }
+            prevguess = num;
             document.getElementById("result").innerHTML=result;
         }
         function resetNum(){
@@ -87,6 +92,16 @@
             document.getElementById("result").innerHTML="GAME IS RESET";    
             gnum=null;
             attempt=1;
+            resetCount++;
+            if(resetCount==3){
+                document.getElementById("min").value="";
+                document.getElementById("max").value="";
+                document.getElementById("num").value="";
+                document.getElementById("result").innerHTML="GAME IS RESET";    
+                gnum=null;
+                attempt=1;
+                resetCount=0;
+            }
         }
     </script>
 </body>
