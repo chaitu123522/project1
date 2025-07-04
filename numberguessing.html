@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <style>
+        body{
+           background: linear-gradient(to right, #00F260, #0575E6);
+
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="min">ENTER MINIMUM VALUE</label>
+                <input type="text" name="" id="min"><br><br>
+
+                <label for="max">ENTER MAXIMUM VALUE</label>
+                <input type="text" name="" id="max"><br><br>
+
+                <input type="submit" value="Generate" class="btn btn-success" onclick="generateNum()">
+                
+                 <input type="submit" value="Reset" class="btn btn-danger" onclick="resetNum()">
+                <br><br>
+            </div>
+            <div class="col-sm-6">
+                <label for="num">ENTER NUMBER</label>
+                <input type="text" name="" id="num">
+                <br><br>
+
+                <input type="submit" value="check" class="btn btn-primary" onclick="game()">
+                <br><br>
+                <h3 id="result"></h3>
+            </div>
+        </div>
+    </div>
+    <script>
+        let gnum=null;
+        let result="";
+        
+        let attempt=1;
+        function generateNum() {
+          let min = parseInt(document.getElementById("min").value);
+          let max = parseInt(document.getElementById("max").value);
+
+          if(isNaN(min) || isNaN(max) || min > max) {
+            alert("Please enter valid min and max values (min should be <= max)");
+            return;
+          }
+
+          gnum = Math.floor(Math.random() * (max - min + 1)) + min;
+          document.getElementById("result").innerHTML="NUMBER IS GENERATED";
+          console.log("Generated Number:", gnum); 
+        }
+
+        function game(){
+            if(gnum==null){
+                generateNum();
+            }
+            let num=parseInt(document.getElementById("num").value);
+            let result="";
+
+            if(isNaN(num)){
+                result="PLEASE ENTER A VALID NUMBER";
+            }
+            else if(num>gnum){
+                result="TOO HIGH! Try a small number";
+            }
+            else if(num<gnum){
+                result="TOO LOW! Try a large number";
+            }
+            else{
+                result="YOU ARE GUESSED NUMBER CORRECTLY IN ATTEMPTS:"+attempt;
+                gnum=null;
+                attempt=0;
+            }
+            attempt++;
+            document.getElementById("result").innerHTML=result;
+        }
+        function resetNum(){
+            document.getElementById("min").value="";
+            document.getElementById("max").value="";
+            document.getElementById("num").value="";
+            document.getElementById("result").innerHTML="GAME IS RESET";    
+            gnum=null;
+            attempt=1;
+        }
+    </script>
+</body>
+</html>
